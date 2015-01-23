@@ -5,26 +5,22 @@
 var records = require('records');
 
 module.exports = function (app, passport) {
+
 //record route 学情分析API
     /**
-     * 通过roomId和taskId获取某个班级(所有的人)在某个任务中的所有status,history(包括TaskStatus/ProblemHistory/ActivityStatus）
+     * task维度 - 通过userIds和taskIds获取多个用户在多个任务中 - 每个任务的完成人数，星星获得总数以及完成人员名单
      */
-//    app.get('/records/task/:taskId/room/:roomId', records.getByTaskAsRoom);
+    app.post('/records/task', records.fetchTask);
     /**
-     * 通过userId和taskId获取某个用户在某个任务中的所有的status,history(包括TaskStatus/ProblemHistory/ActivityStatus）
+     * activity纬度 - 通过userIds和activityIds获取多个用户在多个活动环节中
+     * - 每个活动环节中视频以及巩固题集分别的完成数和对应的题目正确率
      */
-//    app.get('/records/task/:taskId/user/:userId', records.getByTaskAsUser);
+    app.post('/records/activity/stat', records.fetchActivityStat);
     /**
-     * 通过roomId和taskId获取某个班级在某个任务中的status,history的"统计数据", 统计数据包括具体不同值的<统计个数，和所占比例>
+     * activity/problem/choice纬度 - 通过userIds和activityIds获取多个用户在多个环节中
+     * - 每个活动环节中视频以及巩固题集分别的完成人员名单，每一道题目的正确率，以及每个选项的选择率
      */
-//    app.get('/recordsStat/task/:taskId/room:/roomId', recordStats.getByTaskAsRoom);
-    /**
-     * 通过roomId和taskId获取某个班级在某个任务中的status,history的"统计数据", 统计数据包括具体不同值的<统计个数，和所占比例>
-     */
-//    app.get('/recordsStat/task/:taskId/user:/roomId', recordStats.getByTaskAsUser);
-
-    app.post('/recordStars', records.fetchStarsByUserTasks);
-
+    app.post('/records/activity/detail', records.fetchActivityDetail);
 
     /**
      * Error handling
